@@ -37,7 +37,6 @@ const services = [
   }
 ]
 
-
 export default function HeroSection() {
   return (
     <div className="text-white bg-black">
@@ -70,9 +69,10 @@ export default function HeroSection() {
           className="mt-10"
         >
           <Link href="/Signup">
-          <Button className="bg-purple-600 border border-purple-600 text-white font-semibold px-8 py-7 text-base sm:text-lg rounded-xl hover:bg-purple-700 hover:border-purple-700 transition duration-300 shadow-xl">
-            Start Creating Now
-          </Button></Link>
+            <Button className="bg-purple-600 border border-purple-600 text-white font-semibold px-8 py-7 text-base sm:text-lg rounded-xl hover:bg-purple-700 hover:border-purple-700 transition duration-300 shadow-xl">
+              Start Creating Now
+            </Button>
+          </Link>
         </motion.div>
       </section>
 
@@ -84,18 +84,18 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className={`flex flex-col-reverse lg:flex-row items-center gap-10 md:gap-16 ${
-              index % 2 !== 0 ? 'lg:flex-row-reverse' : ''
-            }`}
+            className={`flex flex-col-reverse lg:flex-row items-center gap-10 md:gap-16 ${index % 2 !== 0 ? 'lg:flex-row-reverse' : ''}`}
           >
             {/* TEXT SIDE */}
             <div className="w-full lg:w-1/2 text-center lg:text-left">
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">{service.title}</h2>
               <p className="text-indigo-400 text-lg sm:text-xl mb-3">{service.subtitle}</p>
               <p className="text-gray-300 text-base sm:text-lg mb-6 leading-relaxed">{service.desc}</p>
-              <Link href="/Signup"><Button className="bg-purple-600 border border-purple-600 text-white font-semibold px-6 py-3 text-sm sm:text-base rounded-xl hover:bg-purple-700 hover:border-purple-700 transition">
-                Try {service.title}
-              </Button></Link>
+              <Link href="/Signup">
+                <Button className="bg-purple-600 border border-purple-600 text-white font-semibold px-6 py-3 text-sm sm:text-base rounded-xl hover:bg-purple-700 hover:border-purple-700 transition">
+                  Try {service.title}
+                </Button>
+              </Link>
             </div>
 
             {/* MEDIA SIDE */}
@@ -112,7 +112,7 @@ export default function HeroSection() {
                 />
               ) : (
                 <Image
-                  src={service.image}
+                  src={service.image || '/default-image.jpg'} // Default fallback if image is missing
                   alt={service.title || "Service Media"}
                   width={1600}
                   height={900}
@@ -160,9 +160,11 @@ export default function HeroSection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4, duration: 0.6 }}
         >
-          <Link href="/Signup"><Button className="bg-purple-600 border border-purple-600 text-white font-semibold px-8 py-4 text-base sm:text-lg rounded-xl hover:bg-purple-700 hover:border-purple-700 transition shadow-xl">
-            Start for Free
-          </Button></Link>
+          <Link href="/Signup">
+            <Button className="bg-purple-600 border border-purple-600 text-white font-semibold px-8 py-4 text-base sm:text-lg rounded-xl hover:bg-purple-700 hover:border-purple-700 transition shadow-xl">
+              Start for Free
+            </Button>
+          </Link>
         </motion.div>
       </section>
     </div>

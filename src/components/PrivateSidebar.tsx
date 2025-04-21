@@ -15,6 +15,8 @@ import {
 } from 'lucide-react'
 import clsx from 'clsx'
 
+import { User } from '@supabase/supabase-js'
+
 export default function PrivateSidebar({
   isOpen = true,
   onClose,
@@ -24,12 +26,29 @@ export default function PrivateSidebar({
 }) {
   const router = useRouter()
   const pathname = usePathname()
-  const [user, setUser] = useState(null)
+
+  const [user, setUser] = useState<User | null>(null)
+  const [avatarUrl, setAvatarUrl] = useState<string | null>(null)
 
   useEffect(() => {
     const getSession = async () => {
       const { data: { session } } = await supabase.auth.getSession()
       setUser(session?.user ?? null)
+
+      if (session?.user) {
+        // Fetch user profile from the database (e.g., a 'profiles' table)
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('avatar_url')
+          .eq('id', session.user.id)
+          .single()
+
+        if (error) {
+          console.error('Error fetching profile:', error)
+        } else {
+          setAvatarUrl(data?.avatar_url ?? null) // Set avatar URL or fallback to null
+        }
+      }
     }
     getSession()
   }, [])
@@ -73,8 +92,9 @@ export default function PrivateSidebar({
 
         {/* Profile */}
         <Link href="/dashboard" className="mb-8 block">
+          {/* Dynamic Profile Image */}
           <img
-            src="/default-avatar.png"
+            src={avatarUrl ?? '/default-avatar.png'} // Use fetched avatar or fallback to default
             alt="Profile"
             className="w-12 h-12 rounded-full mb-4 hover:opacity-80 transition"
           />
